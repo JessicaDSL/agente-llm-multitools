@@ -41,6 +41,14 @@ def consulta_pokemon(nome: str) -> str:
     
     return f"{dados['name']} é um Pokémon do tipo {tipos[0]}, tem {altura}m de altura, {peso}kg e as habilidades: {', '.join(habilidades)}."
 
+def compara_pokemons(nome1: str, nome2: str) -> str:
+    pokemon1 = consulta_pokemon(nome1)
+    pokemon2 = consulta_pokemon(nome2)
+    
+    if "Pokémon não encontrado" in pokemon1 or "Pokémon não encontrado" in pokemon2:
+        return "Um ou ambos os Pokémon não foram encontrados."
+    
+    return f"Comparação entre {nome1} e {nome2}:\n{pokemon1}\n{pokemon2}"
 
 tools = {
     "adiciona": adiciona,
@@ -49,7 +57,8 @@ tools = {
     "consulta_usuario": consulta_usuario,
     "multiplica": multiplica,
     "info_curiosa": info_curiosa,
-    "consulta_pokemon": consulta_pokemon
+    "consulta_pokemon": consulta_pokemon,
+    "compara_pokemons": compara_pokemons
 }
 
 funcoes = [
@@ -136,6 +145,21 @@ funcoes = [
                 "required": ["nome"]
             }
         }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "compara_pokemons",
+        "description": "Compara dois Pokémons e retorna uma análise das diferenças e semelhanças.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "nome1": {"type": "string", "description": "Nome do primeiro Pokémon"},
+            "nome2": {"type": "string", "description": "Nome do segundo Pokémon"}
+          },
+          "required": ["nome1", "nome2"]
+        }
+      }
     }
 ]
 
